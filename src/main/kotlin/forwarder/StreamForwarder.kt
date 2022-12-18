@@ -11,7 +11,10 @@ import java.net.SocketException
 
 
 class PortForwarder(
-    private val localhost: Any, private val localPort: Int, private val targetHost: String, private val targetPort: Int
+    private val localhost: Any,
+    private val localPort: Int,
+    private val targetHost: String,
+    private val targetPort: Int
 ) {
     private val maxConnectedClient: Int = 50
 
