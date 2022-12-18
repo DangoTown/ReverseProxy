@@ -29,7 +29,7 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    val classValue = "forwarder.PortForwarderKt"
+    val classValue = "forwarder.StreamForwarderKt"
     mainClass.set(classValue)
     mainClassName = classValue
 }
