@@ -1,3 +1,3 @@
 
-rootProject.name = "PortForwarder"
+rootProject.name = "StreamForwarder"
 
