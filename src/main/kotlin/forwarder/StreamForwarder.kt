@@ -8,31 +8,17 @@ import java.io.File
 import java.net.ServerSocket
 import java.net.Socket
 import java.net.SocketException
-import java.util.logging.Logger
-
-
-class Config {
-    fun readConfig(): List<String> {
-        val contents = File("./forwarder.ini").readText()
-        return contents.split(" ")
-    }
-}
 
 
 class PortForwarder(
-    private val localhost: String,
-    private val localPort: Int,
-    private val targetHost: String,
-    private val targetPort: Int
+    private val localhost: Any, private val localPort: Int, private val targetHost: String, private val targetPort: Int
 ) {
     private val maxConnectedClient: Int = 50
-    private val logger = Logger.getLogger("forwarder.main")
-
 
     fun start() = runBlocking {
         try {
-            logger.info("开始转发 $localhost:$localPort => $targetHost:$targetPort")
-            logger.warning("最多允许${maxConnectedClient / 2}个客户端同时连接此线路")
+            println("开始转发 $localhost:$localPort => $targetHost:$targetPort")
+            println("最多允许${maxConnectedClient / 2}个客户端同时连接此线路")
             val serverSocket = withContext(Dispatchers.IO) {
                 ServerSocket(localPort)
             }
@@ -43,16 +29,15 @@ class PortForwarder(
                 val client = withContext(Dispatchers.IO) {
                     Socket(targetHost, targetPort)
                 }
-                launch { forward(connection, client) }  // 启动两个线程
-                launch { forward(client, connection) }
-                /*
-                * 使用两个线程将数据交换
+                launch { forward(connection, client) }  // 启动两个协程
+                launch { forward(client, connection) }/*
+                * 使用两个协程将数据交换
                 *
-                *         客户端  =>  代理服务器(线程1)  => 服务器
+                *         客户端  =>  代理服务器(协程1)  => 服务器
                 *           ↑           (交换数据)          ↓
-                *                <=  代理服务器(线程2)  <=
+                *                <=  代理服务器(协程2)  <=
                 * */
-                logger.info(
+                println(
                     "${connection.inetAddress.hostAddress}:${connection.port} 已连接"
                 )
             }
@@ -81,7 +66,7 @@ class PortForwarder(
                         outputStream.flush()
                     }
                 } catch (e: SocketException) {
-                    logger.info("${writer.inetAddress} 断开连接...")
+                    println("${writer.inetAddress} 断开连接...")
                     withContext(Dispatchers.IO) {
                         reader.close()
                         writer.close()
@@ -96,10 +81,25 @@ class PortForwarder(
 }
 
 fun main(args: Array<String>) {
-    if (args.isNotEmpty()) {
+    if (args.isNotEmpty() && args.size == 4) {
+        Config().write(args)
+        println(
+            "已在config.txt中保存了本次的配置文件\n" + "可直接使用java -jar <JARFile>\n" + "不添加参数直接启动"
+        )
         PortForwarder(args[0], args[1].toInt(), args[2], args[3].toInt()).start()
+    } else if (File("./config.txt").exists()) {
+        println("使用文件内的配置进行转发")
+        val config = Config().read()
+        if (config.isNotEmpty()) {
+            PortForwarder(config[0], config[1].toInt(), config[2], config[3].toInt()).start()
+        } else {
+            println(
+                "配置文件不存在\n" + "使用命令行启动一次则会自动创建配置文件"
+            )
+            return
+        }
     } else {
-        val config = Config().readConfig()
-        PortForwarder(config[0], config[1].toInt(), config[2], config[3].toInt()).start()
+        println("请输入四个完整的参数")
+        return
     }
 }

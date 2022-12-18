@@ -1,0 +1,4 @@
+localHost: 0.0.0.0
+localPort: 25565
+remoteHost: mc.example.com
+remotePort: 25565
