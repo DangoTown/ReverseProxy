@@ -6,8 +6,8 @@ plugins {
     application
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "cn.rtast.forwarder"
+version = "1.2"
 
 repositories {
     maven { setUrl("https://maven.aliyun.com/repository/public") }
