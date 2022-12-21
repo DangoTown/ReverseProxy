@@ -6,7 +6,7 @@ plugins {
     application
 }
 
-group = "cn.rtast.forwarder"
+group = "cn.rtast"
 version = "1.2"
 
 repositories {
@@ -29,7 +29,7 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    val classValue = "forwarder.StreamForwarderKt"
+    val classValue = "MainKt"
     mainClass.set(classValue)
     mainClassName = classValue
 }

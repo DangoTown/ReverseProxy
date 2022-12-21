@@ -15,6 +15,7 @@
 * 本项目使用`gradle`来编译项目, 并使用`ShadowJar`将代码编译为 `Jar`
 * 使用`./gradlew build` (`Linux`, `Unix`) | `.\gradlew.bat build` (Windows) 编译
 * 编译后的jar文件在`./build/libs/<ArtifactsName>-all.jar` ***请运行`-all`包含在文件名内的jar文件***
+* > 在 `IntelliJ IDEA`中使用 `Ctrl` + `F9` 编译项目并不出出现 `-all` 字样在文件名内, 请直接运行输出的jar文件
 
 ## 运行
 

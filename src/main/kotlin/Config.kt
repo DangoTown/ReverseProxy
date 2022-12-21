@@ -1,5 +1,3 @@
-package forwarder
-
 import java.io.File
 
 class Config {
