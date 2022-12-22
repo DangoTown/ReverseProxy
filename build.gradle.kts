@@ -29,7 +29,7 @@ tasks.withType<KotlinCompile> {
 }
 
 application {
-    val classValue = "MainKt"
+    val classValue = "cn.rtast.forwarder.MainKt"
     mainClass.set(classValue)
     mainClassName = classValue
 }
