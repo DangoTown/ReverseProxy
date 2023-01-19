@@ -15,13 +15,9 @@ class StreamForwarder(
     private val targetHost: String,
     private val targetPort: Int
 ) {
-    private val maxConnectedClient: Int = 50
 
     fun start() = runBlocking {
-        println(
-            "开始转发 $localhost:$localPort => $targetHost:$targetPort\n" +
-                    "最多允许${maxConnectedClient / 2}个客户端同时连接此线路"
-        )
+        println("开始转发 $localhost:$localPort => $targetHost:$targetPort\n")
         val serverSocket = withContext(Dispatchers.IO) {
             ServerSocket(localPort)
         }
@@ -59,7 +55,7 @@ class StreamForwarder(
                 val length = withContext(Dispatchers.IO) {
                     inputStream.read(buffer)
                 }
-                if (length == -1) break  // 退出协程释放内存
+                if (length == -1) break
                 withContext(Dispatchers.IO) {
                     outputStream.write(buffer, 0, length)
                     outputStream.flush()
@@ -70,7 +66,7 @@ class StreamForwarder(
                     reader.close()
                     writer.close()
                 }
-                return   // 游戏客户端断开连接, 直接return退出循环
+                return
             }
         }
     }
