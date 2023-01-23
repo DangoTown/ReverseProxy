@@ -1,3 +1,3 @@
 
-rootProject.name = "StreamForwarder"
+rootProject.name = "ReverseProxy"
 
