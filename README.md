@@ -1,10 +1,5 @@
 # ReverseProxy
 
-## 概述
-
-> 使用`kotlin`编写程序, 并打包为`jar`运行
-> 使用了`kotlin-coroutines` 协程来提高运行效率
-
 <!-- TOC -->
 * [ReverseProxy](#reverseproxy)
   * [概述](#概述)
@@ -13,6 +8,11 @@
   * [运行](#运行)
   * [使用例](#使用例)
 <!-- TOC -->
+
+## 概述
+
+> 使用`kotlin`编写程序, 并打包为`jar`运行
+> 使用了`kotlin-coroutines` 协程来提高运行效率
 
 ## 实现
 
