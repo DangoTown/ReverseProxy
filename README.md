@@ -3,7 +3,7 @@
 ## 概述
 
 > 使用`kotlin`编写程序, 并打包为`jar`运行
-> 使用了`kotlin-coroutines` 协程来提高效率
+> 使用了`kotlin-coroutines` 协程来提高运行效率
 
 ## 实现
 
@@ -25,3 +25,24 @@
     * remoteHost: `<Remote Host>`
     * remotePort: `<Remote Port>`
 * ***请将冒号后的配置替换为你所需要的配置***
+
+## 使用例
+
+> 运行反代
+
+```shell
+$ java -jar ReverseProxy.jar 0.0.0.0 80 localhost 8000
+```
+
+> 运行后端
+
+```shell
+$ python3 -m http.server
+```
+
+> 测试
+
+```shell
+$ curl http://localhost
+```
+
