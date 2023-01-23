@@ -9,7 +9,7 @@ import java.net.Socket
 import java.net.SocketException
 
 
-class StreamForwarder(
+class Proxy(
     private val localhost: Any,
     private val localPort: Int,
     private val targetHost: String,
@@ -29,13 +29,7 @@ class StreamForwarder(
                 Socket(targetHost, targetPort)
             }
             launch { forward(connection, client) }  // 启动两个协程
-            launch { forward(client, connection) }/*
-                * 使用两个协程将数据交换
-                *
-                *         客户端  =>  代理服务器(协程1)  => 服务器
-                *           ↑           (交换数据)          ↓
-                *                <=  代理服务器(协程2)  <=
-                * */
+            launch { forward(client, connection) }
             println(
                 "${connection.inetAddress.hostAddress}:${connection.port} 已连接"
             )
